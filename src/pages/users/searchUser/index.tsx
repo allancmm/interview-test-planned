@@ -1,9 +1,8 @@
-import React, {FormEvent } from "react";
-import {  Stack } from '@mui/material';
-import { onChangeAge, setAllUsers, userState } from "../../../redux/userSlice";
+import React, { FormEvent } from "react";
+import { Stack } from '@mui/material';
+import { onChangeAge, updateAllUsers, userState } from "../../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldAgeType } from "../../../lib/domain/types/user";
-import { User } from "../../../lib/domain/entities";
 import { UserService } from "../../../lib/services";
 import { defaultUserService } from "../../../lib/context";
 import { InputText, CustomizedPaper, CustomButton } from "../../../components";
@@ -20,20 +19,14 @@ const SearchUser = ({ userService } : SearchUserProps) => {
     dispatch(onChangeAge({ field, value }));
   }
 
-  const handleRespGetUsers = (usersResp: User[]) => {
-    // TODO - add function fullName to class User
-    const users = usersResp.map(({ age, name: { firstName, lastName }}) =>
-      ({ age, name: `${firstName} ${ lastName }`}));
-    dispatch(setAllUsers(users));
-  }
-
   const retrieveUsers = async (e: FormEvent) => {
     e.preventDefault();
-    await Promise.all([
-      userService.getAllUsersKid().then(({ data }) => handleRespGetUsers(data)),
-      userService.getAllUsersAdults().then(({ data }) => handleRespGetUsers(data)),
-      userService.getAllUsersSeniors().then((data) => handleRespGetUsers(data))
+    const [kids, adults, seniors] = await Promise.all([
+      userService.getAllUsersKid(),
+      userService.getAllUsersAdults(),
+      userService.getAllUsersSeniors()
     ]);
+    dispatch(updateAllUsers([...kids.data, ...adults.data, ...seniors]));
   }
 
   return (

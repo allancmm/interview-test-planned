@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { UserDisplay, FieldAgeType, FieldUserSearch } from "../lib/domain/types/user";
+import {User} from "../lib/domain/entities";
 
 interface UserState {
   allUsers: UserDisplay[],
@@ -22,11 +23,21 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAllUsers: (state, { payload }) => {
-      state.allUsers = [...state.allUsers, ...payload]
+    updateAllUsers: (state, action: PayloadAction<User[]> ) => {
+      // TODO - add function fullName to class User
+      state.allUsers = action.payload.map(({ age, name: { firstName, lastName }}) =>
+        ({ age, name: `${firstName} ${ lastName }`}))
     },
-    updateUsersOrdered: (state, { payload }) => {
-       state.usersOrdered = payload;
+    updateUsersOrdered: (state) => {
+      const { allUsers, userSearch, minAge, maxAge } = state;
+      // TODO - analyse whether space in name doesn't affect sort
+      state.usersOrdered =  allUsers
+        .filter(u => u.name.toUpperCase()
+            .includes(userSearch.toUpperCase())
+          && minAge <= u.age && u.age <= maxAge)
+        .sort((a, b) =>
+          a.name !== b.name ? a.name.localeCompare(b.name) : b.age - a.age
+        );
     },
     onChangeAge: (state, action: PayloadAction<{ field: FieldAgeType, value: string}>) => {
       const { payload: {field, value} } = action;
@@ -39,7 +50,7 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setAllUsers, updateUsersOrdered, onChangeAge, onChangeUserSearch } = userSlice.actions;
+export const { updateAllUsers, updateUsersOrdered, onChangeAge, onChangeUserSearch } = userSlice.actions;
 
 export const userState = (state: RootState) => state.user;
 
