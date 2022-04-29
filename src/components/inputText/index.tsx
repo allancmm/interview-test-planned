@@ -1,5 +1,6 @@
 import React, {ReactNode} from "react";
-import {InputAdornment, TextField} from "@mui/material";
+import { InputAdornment } from "@mui/material";
+import { CustomizedTextField } from "./style";
 
 type InputTextType = 'number' | 'text';
 
@@ -12,7 +13,7 @@ export interface InputTextProps {
   onChange(name: string, value: string) : void
 }
 const InputText = ({ name, value, type, startAdornment, placeholder, onChange } : InputTextProps) => {
-  return <TextField
+  return <CustomizedTextField
             variant="outlined"
             type={type}
             value={value}

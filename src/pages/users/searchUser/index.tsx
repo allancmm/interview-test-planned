@@ -1,12 +1,12 @@
-import React from "react";
-import { Button, Stack } from '@mui/material';
+import React, {FormEvent } from "react";
+import {  Stack } from '@mui/material';
 import { onChangeAge, setAllUsers, userState } from "../../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldAgeType } from "../../../lib/domain/types/user";
 import { User } from "../../../lib/domain/entities";
 import { UserService } from "../../../lib/services";
 import { defaultUserService } from "../../../lib/context";
-import { InputText, CustomizedPaper } from "../../../components";
+import { InputText, CustomizedPaper, CustomButton } from "../../../components";
 
 interface SearchUserProps {
   userService: UserService
@@ -27,7 +27,8 @@ const SearchUser = ({ userService } : SearchUserProps) => {
     dispatch(setAllUsers(users));
   }
 
-  const retrieveUsers = async () => {
+  const retrieveUsers = async (e: FormEvent) => {
+    e.preventDefault();
     await Promise.all([
       userService.getAllUsersKid().then(({ data }) => handleRespGetUsers(data)),
       userService.getAllUsersAdults().then(({ data }) => handleRespGetUsers(data)),
@@ -37,6 +38,7 @@ const SearchUser = ({ userService } : SearchUserProps) => {
 
   return (
     <CustomizedPaper>
+      <form onSubmit={retrieveUsers}>
         <Stack spacing={2} p={4}>
             <InputText
               type="number"
@@ -54,20 +56,14 @@ const SearchUser = ({ userService } : SearchUserProps) => {
               onChange={handleChangeAge}
             />
 
-          <Button
-            onClick={retrieveUsers}
-            variant="contained"
-            style={{maxWidth: "45%",
-                    backgroundColor: "#3f9163",
-                    borderRadius: 20,
-                    textTransform:'none',
-                    marginBottom:'16px',
-                    display:"inline-block"
-                  }}
-          >
-            Retrieve users
-          </Button>
-      </Stack>
+            <CustomButton
+              type="submit"
+              variant="contained"
+            >
+              Retrieve users
+            </CustomButton>
+        </Stack>
+      </form>
     </CustomizedPaper>
   );
 }
