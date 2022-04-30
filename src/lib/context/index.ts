@@ -1,7 +1,7 @@
 import UserService from "../services/userService";
-import {AxiosApiGateway} from "../infra/config/axiosApiGateway";
+import { AxiosApiGateway } from "../infra/config/axiosApiGateway";
 import { JsonSerializer } from "../infra/config/jsonSerializer";
-import {UserApiRepository} from "../infra/repositories";
+import { UserApiRepository } from "../infra/repositories";
 
 const objectMapper = new JsonSerializer();
 

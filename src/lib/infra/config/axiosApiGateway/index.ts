@@ -22,7 +22,7 @@ export class AxiosApiGateway implements ApiGateway {
   }
 
   private processErrorBody = async (_: any): Promise<any> => {
-    // TODO - create a class and handle it properly
+    // TODO - handle it properly
     return Promise.reject({ error: 'Something happened', status: 500 })
   }
 

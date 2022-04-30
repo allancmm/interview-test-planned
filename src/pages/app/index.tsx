@@ -3,8 +3,8 @@ import { Header, Footer } from "../../components";
 import Users from "../users";
 import { GlobalStyles, AppContainer, MainContainer,  } from "./style";
 
-const App = () =>
-    <>
+const App = () => {
+    return <>
       {/* TODO - create a theme for default css properties */}
       <GlobalStyles />
       <AppContainer>
@@ -14,6 +14,6 @@ const App = () =>
           </MainContainer>
         <Footer />
       </AppContainer>
-    </>;
+    </>};
 
 export default App;

@@ -3,7 +3,7 @@ import { RootState } from "./store";
 import { UserDisplay, FieldAgeType, FieldUserSearch } from "../lib/domain/types/user";
 import { User } from "../lib/domain/entities";
 
-interface UserState {
+export interface UserState {
   allUsers: UserDisplay[],
   usersOrdered: UserDisplay[]
   minAge: number,

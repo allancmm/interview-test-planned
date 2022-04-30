@@ -1,14 +1,14 @@
+import { Type } from "class-transformer";
+
 export default class User {
   age = 0;
   country = '';
   email = '';
-  name: UserName = {
-    firstName: '',
-    lastName: '',
-  };
+  @Type(() => UserName)
+  public name: UserName = new UserName();
 }
 
-class UserName {
+export class UserName {
   firstName = '';
   lastName = '';
 }
