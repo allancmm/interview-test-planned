@@ -1,7 +1,8 @@
-export { CustomButton } from "./customButton";
+export { Button } from "./button";
 export { default as Header } from "./header";
 export { default as Footer } from "./footer";
 export { default as InputText } from "./inputText";
-export { CustomizedPaper } from "./customizedPaper";
-export { CustomizedList } from "./customizedList";
-export { CustomizedDivider } from "./customizedDivider";
+export { Paper } from "./paper";
+export { List } from "./list";
+export { Divider } from "./divider";
+export { Title } from "./title";

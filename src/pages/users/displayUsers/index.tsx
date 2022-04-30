@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-import { InputText, CustomizedPaper, CustomizedList, CustomizedDivider } from "../../../components";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { Stack, Grid } from '@mui/material';
 import { updateUsersOrdered, onChangeUserSearch, userState } from "../../../redux/userSlice";
 import { FieldUserSearch } from "../../../lib/domain/types/user";
-import { Stack, Grid } from '@mui/material';
-import { ReactComponent as SearchIcon } from '../../../assets/search.svg';
+import { InputText, Paper, List, Divider } from "../../../components";
 import UserItem from "./userItem";
-import { HeaderTable, ArrowSortIcon, ContainerAgeTable } from "./style";
+import { HeaderTable, ArrowSortIcon, SearchIcon, ContainerAgeTable } from "./style";
 
 const DisplayUsers = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { allUsers, userSearch, usersOrdered } = useSelector(userState);
+  const { allUsers, userSearch, usersOrdered } = useAppSelector(userState);
 
   const handleChangeUserSearch = (field: FieldUserSearch, value: string) => {
     dispatch(onChangeUserSearch({ field, value }));
@@ -22,7 +21,7 @@ const DisplayUsers = () => {
   }, [allUsers, userSearch, dispatch])
 
   return (
-    <CustomizedPaper>
+    <Paper>
       <Stack p={4} spacing={2}>
           <InputText
             type='text'
@@ -33,7 +32,9 @@ const DisplayUsers = () => {
             startAdornment={<SearchIcon />}
           />
       </Stack>
-      <CustomizedDivider />
+
+      <Divider />
+
       <Stack p={4} spacing={2}>
         <Grid container>
            <Grid item sm={1}></Grid>
@@ -50,15 +51,13 @@ const DisplayUsers = () => {
             <ArrowSortIcon />
           </Grid>
         </Grid>
-        <CustomizedList>
+        <List>
           {/* TODO - use a library like uniqid to generate unique keys when converting the JSON into object  */}
-          {usersOrdered.map((user, index)=><UserItem user={user} key={index}/>)}
-        </CustomizedList>
+          { usersOrdered.map((user, index)=><UserItem user={user} key={index}/>) }
+        </List>
       </Stack>
-    </CustomizedPaper>
+    </Paper>
   );
 }
-
-DisplayUsers.defaultProps = {}
 
 export default DisplayUsers;

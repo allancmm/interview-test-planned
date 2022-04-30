@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { UserDisplay, FieldAgeType, FieldUserSearch } from "../lib/domain/types/user";
-import {User} from "../lib/domain/entities";
+import { User } from "../lib/domain/entities";
 
 interface UserState {
   allUsers: UserDisplay[],
@@ -30,7 +30,6 @@ export const userSlice = createSlice({
     },
     updateUsersOrdered: (state) => {
       const { allUsers, userSearch, minAge, maxAge } = state;
-      // TODO - analyse whether space in name doesn't affect sort
       state.usersOrdered =  allUsers
         .filter(u => u.name.toUpperCase()
             .includes(userSearch.toUpperCase())
@@ -44,7 +43,7 @@ export const userSlice = createSlice({
       state[field] = parseInt(value, 10);
     },
     onChangeUserSearch: (state, action: PayloadAction<{ field: FieldUserSearch, value: string}>) => {
-      const { payload: {field, value} } = action;
+      const { payload: { field, value } } = action;
       state[field] = value;
     }
   }

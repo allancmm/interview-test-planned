@@ -1,8 +1,8 @@
 import React from 'react';
-import {Grid, Checkbox } from '@mui/material';
+import { Grid, Checkbox } from '@mui/material';
 import { UserDisplay } from "../../../../lib/domain/types/user";
 import { ContainerAgeTable } from "../style";
-import { CustomizedDivider } from "../../../../components";
+import { Divider } from "../../../../components";
 
 interface UserItemProps {
   user: UserDisplay;
@@ -19,7 +19,7 @@ const UserItem = ({ user }: UserItemProps) =>
           <ContainerAgeTable>{user.age}</ContainerAgeTable>
         </Grid>
       </Grid>
-      <CustomizedDivider sx={{ margin:"var(--s-base) !important" }}/>
+      <Divider sx={{ margin:"var(--s-base) !important" }}/>
     </>;
 
 export default UserItem;
