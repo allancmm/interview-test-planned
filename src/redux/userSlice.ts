@@ -40,7 +40,7 @@ export const userSlice = createSlice({
     },
     onChangeAge: (state, action: PayloadAction<{ field: FieldAgeType, value: string}>) => {
       const { payload: {field, value} } = action;
-      state[field] = parseInt(value, 10);
+      state[field] = parseInt(value, 10) || 0;
     },
     onChangeUserSearch: (state, action: PayloadAction<{ field: FieldUserSearch, value: string}>) => {
       const { payload: { field, value } } = action;
